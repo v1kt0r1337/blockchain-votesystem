@@ -1,0 +1,32 @@
+{
+  "name": "blockchainvoting",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "config": "^1.26.2",
+    "express": "^4.16.2",
+    "json-loader": "^0.5.7",
+    "morgan": "^1.9.0",
+    "node-gyp": "^3.6.2",
+    "node-pre-gyp": "^0.6.38",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.14",
+    "uuid": "^3.1.0",
+    "web3": "^0.20.1"
+  },
+  "scripts": {
+    "start": "nodemon --exec 'npm run start:dev'",
+    "start:prod": "npm run build && NODE_ENV=production node src/backend/server.js",
+    "hotload": "react-scripts start",
+    "start:dev": "NODE_ENV=dev node src/backend/server.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
