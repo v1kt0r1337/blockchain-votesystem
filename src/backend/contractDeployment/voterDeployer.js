@@ -55,7 +55,7 @@ const VoterDeployer = {
         callback(null, "https://ropsten.etherscan.io/tx/" + contract.transactionHash);
         // http://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
         function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms);
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
 
         // We need to wait until any miner has included the transaction
