@@ -2,7 +2,7 @@ import baseConsumer from "./baseConsumer";
 
 const Voter = {
 
-    postVoter: function(snn, password, callback) {
+    postVoter: function(ssn, password, callback) {
         const route = "voters/";
         const data = {
             ssn: ssn,

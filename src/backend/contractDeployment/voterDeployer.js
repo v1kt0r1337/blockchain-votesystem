@@ -22,7 +22,7 @@ const VoterDeployer = {
         // Unlock the coinbase account to make transactions out of it
         console.log("Unlocking coinbase account");
         try {
-            web3.personal.unlockAccount("0x758cfea0174400e2f9405cc7cd501dc521624ad2", "hemmelig");
+            web3.personal.unlockAccount(config.address, config.password);
         } catch(e) {
             console.log(e);
         }
@@ -55,7 +55,7 @@ const VoterDeployer = {
         callback(null, "https://ropsten.etherscan.io/tx/" + contract.transactionHash);
         // http://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
         function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+            return new Promise(resolve => setTimeout(resolve, ms);
         }
 
         // We need to wait until any miner has included the transaction
