@@ -111,8 +111,8 @@ pragma solidity ^0.4.18;
 contract Voter {
     // These are used to validate a Voter
     struct Identifiers {
-    address creator;
-    bytes32 identifyingHash;
+        address creator;
+        bytes32 identifyingHash;
     }
 
     uint creationTime;
@@ -153,4 +153,23 @@ contract Voter {
     function createIdentifyingHash(uint ssn, bytes32 password) constant private returns (bytes32) {
         return keccak256(ssn, password);
     }
+
+// How the getCode works:
+//    function getCode(address _addr) public view returns (bytes) {
+//
+//        bytes memory code;
+//        assembly {
+//            // code size
+//            let size := extcodesize(_addr)
+//            // set code pointer value to free memory
+//            code := mload(0x40)
+//            // new "memory end" including padding
+//            mstore(0x40, add(code, and(add(add(size, 0x20), 0x1f), not(0x1f))))
+//            // store length in memory
+//            mstore(code, size)
+//            // actually retrieve the code, this needs assembly
+//            extcodecopy(_addr, add(code, 0x20), 0, size)
+//        }
+//        return code;
+//    }
 }
