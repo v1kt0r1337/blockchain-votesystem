@@ -23,11 +23,12 @@ function deployVoterContract(ssn, password, callback) {
 /**
  * Returns all voters on the blockchain created from the wallet address in specified in the config files.
  */
-function getVotersFromBlockchain() {
+function getVotersAddressesFromBlockchain() {
     const {VoterContract, code} = getVoterContract();
     const contractAddresses = getWalletsContractAddresses();
     const potentialVoters = contractAddresses.map(e => VoterContract.at(e));
-    return potentialVoters.filter(e => e != isVoter(e));
+    const voters = potentialVoters.filter(e => e != isVoter(e));
+    return voters.map(e => e.address);
 }
 
 function getVoterContract() {
@@ -56,4 +57,4 @@ function getVoterContractCheckSum() {
     return web3.sha3(binary);
 }
 
-module.exports = {deployVoterContract, getVotersFromBlockchain};
+module.exports = {deployVoterContract, getVotersAddressesFromBlockchain};

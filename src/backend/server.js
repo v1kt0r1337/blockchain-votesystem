@@ -47,8 +47,8 @@ console.log("Server is running on port " + port);
 module.exports = app;
 
 // For testing
-// const { getVotersFromBlockchain } = require("./models/voter");
-// console.log(getVotersFromBlockchain());
+// const { getVotersAddressesFromBlockchain } = require("./models/voter");
+// console.log(getVotersAddressesFromBlockchain());
 
 // const runSimulation = require("./korridorsim");
 // runSimulation();
