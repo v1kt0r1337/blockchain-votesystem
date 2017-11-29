@@ -15,6 +15,7 @@ contract Ballot {
     bytes32[] public candidateList;
 
     address owner;
+    bytes32 ballotName;
     uint creationTime;
     uint expireTime;
 
@@ -27,8 +28,9 @@ contract Ballot {
     deploy the contract to the blockchain. When we deploy the contract,
     we will pass an array of candidates who will be contesting in the election
     */
-    function Ballot(bytes32[] candidateNames, uint daysUntilExpire, Voter[] eligibleVoters) {
-        candidateList = candidateNames;
+    function Ballot(bytes32 name, bytes32[] candidates, uint daysUntilExpire, Voter[] eligibleVoters) {
+        ballotName = name;
+        candidateList = candidates;
         owner = msg.sender;
         creationTime = now;
         expireTime = creationTime + (daysUntilExpire * 1 days);
