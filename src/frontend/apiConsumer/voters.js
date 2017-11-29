@@ -1,7 +1,6 @@
 import baseConsumer from "./baseConsumer";
 
 const Voter = {
-
     postVoter: function(ssn, password, callback) {
         const route = "voters/";
         const data = {
@@ -17,30 +16,6 @@ const Voter = {
             }
         });
     },
-
-    // getAllItems: function (callback) {
-    //     baseConsumer.getJSON("items/", "", (err, result) => {
-    //         if (!err) {
-    //             callback(null, result);
-    //         }
-    //         else {
-    //             callback(err);
-    //         }
-    //     });
-    // },
-    //
-    // getItem: function (id, callback) {
-    //     baseConsumer.getJSON("items/", id, (err, result) => {
-    //         if (!err) {
-    //             callback(null, result);
-    //         }
-    //         else {
-    //             callback(err);
-    //         }
-    //     });
-    // },
-
-
 };
 
 export default Voter;

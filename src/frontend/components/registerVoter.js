@@ -1,22 +1,18 @@
 /**
  * Created by archheretic on 29.10.17.
  */
-
 import React from "react";
 import Voter from "../apiConsumer/voters";
-
 
 class RegisterVoter extends React.Component {
     constructor(props) {
         super(props);
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeSSN = this.changeSSN.bind(this);
         this.changePassword = this.changePassword.bind(this);
     }
 
     render() {
-
         return (
             <div className="register">
                 <h1>Register new Voter</h1>
@@ -42,7 +38,6 @@ class RegisterVoter extends React.Component {
                         />
                     </div>
                     <input type="submit" value="Submit" />
-
                 </form>
             </div>
         );
