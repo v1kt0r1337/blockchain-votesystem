@@ -3,10 +3,10 @@
  */
 import baseConsumer from "./baseConsumer";
 
-function postBallot(ballotName, candidateList, daysUntilExpire, callback) {
-    const route = "ballots/";
+function postElection(electionName, candidateList, daysUntilExpire, callback) {
+    const route = "elections/";
     const data = {
-        ballotName,
+        electionName,
         candidateList,
         daysUntilExpire
     };
@@ -20,4 +20,4 @@ function postBallot(ballotName, candidateList, daysUntilExpire, callback) {
     });
 }
 
-export {postBallot};
+export {postElection};

@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 // We have to specify what version of compiler this code will compile with
 
-contract Ballot {
+contract Election {
 
     /* mapping field below is equivalent to an associative array or hash table.
     The key of the mapping is candidate name stored as type bytes32 and value is
@@ -15,7 +15,7 @@ contract Ballot {
     bytes32[] public candidateList;
 
     address owner;
-    bytes32 ballotName;
+    bytes32 electionName;
     uint creationTime;
     uint expireTime;
 
@@ -28,8 +28,8 @@ contract Ballot {
     deploy the contract to the blockchain. When we deploy the contract,
     we will pass an array of candidates who will be contesting in the election
     */
-    function Ballot(bytes32 name, bytes32[] candidates, uint daysUntilExpire, Voter[] eligibleVoters) {
-        ballotName = name;
+    function Election(bytes32 name, bytes32[] candidates, uint daysUntilExpire, Voter[] eligibleVoters) {
+        electionName = name;
         candidateList = candidates;
         owner = msg.sender;
         creationTime = now;
@@ -113,8 +113,8 @@ pragma solidity ^0.4.18;
 contract Voter {
     // These are used to validate a Voter
     struct Identifiers {
-        address creator;
-        bytes32 identifyingHash;
+    address creator;
+    bytes32 identifyingHash;
     }
 
     uint creationTime;
@@ -142,10 +142,10 @@ contract Voter {
         // This basically means continue
         _;
     }
-    function vote(bytes32 candidate, address ballotContract, uint ssn, bytes32 password)
+    function vote(bytes32 candidate, address electionContract, uint ssn, bytes32 password)
     hasValidCredentials(ssn, password) {
-        Ballot ballot = Ballot(ballotContract);
-        ballot.voteForCandidate(candidate);
+        Election election = Election(electionContract);
+        election.voteForCandidate(candidate);
     }
 
     function getIdentifiers() constant returns (address, bytes32) {
@@ -156,22 +156,22 @@ contract Voter {
         return keccak256(ssn, password);
     }
 
-// How the getCode works:
-//    function getCode(address _addr) public view returns (bytes) {
-//
-//        bytes memory code;
-//        assembly {
-//            // code size
-//            let size := extcodesize(_addr)
-//            // set code pointer value to free memory
-//            code := mload(0x40)
-//            // new "memory end" including padding
-//            mstore(0x40, add(code, and(add(add(size, 0x20), 0x1f), not(0x1f))))
-//            // store length in memory
-//            mstore(code, size)
-//            // actually retrieve the code, this needs assembly
-//            extcodecopy(_addr, add(code, 0x20), 0, size)
-//        }
-//        return code;
-//    }
+    // How the getCode works:
+    //    function getCode(address _addr) public view returns (bytes) {
+    //
+    //        bytes memory code;
+    //        assembly {
+    //            // code size
+    //            let size := extcodesize(_addr)
+    //            // set code pointer value to free memory
+    //            code := mload(0x40)
+    //            // new "memory end" including padding
+    //            mstore(0x40, add(code, and(add(add(size, 0x20), 0x1f), not(0x1f))))
+    //            // store length in memory
+    //            mstore(code, size)
+    //            // actually retrieve the code, this needs assembly
+    //            extcodecopy(_addr, add(code, 0x20), 0, size)
+    //        }
+    //        return code;
+    //    }
 }

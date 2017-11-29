@@ -7,17 +7,17 @@ Compile contracts with Solc.
 It's important that this is done in the exact same path as the contract code.
 First navigate to project directory "contracts", then:
 ```sh
-solc Ballot.sol --combined-json abi,asm,ast,bin,bin-runtime,clone-bin,devdoc,interface,opcodes,srcmap,srcmap-runtime,userdoc > contracts.json
+solc Election.sol --combined-json abi,asm,ast,bin,bin-runtime,clone-bin,devdoc,interface,opcodes,srcmap,srcmap-runtime,userdoc > contracts.json
 ```
 
 
 16:50:04 <+archheretic> Har et litt rart voting system
-Har 2 smart kontrakter: Ballot (Stemmeseddel) og Voter. Vanlige folk som oss skal kunne lage en Voter gjennom dette 
-grensesnittet (bruker min wallet addresse), og kun disse skal kunne brukes til å stemme i Ballot. Ballot er kanskje 
-et litt upresist navn fordi det kun er en ballot per valg, men ihvertfall hver Ballot tar inn Voter[] voters som 
-parameter i sin konstruktor. Så derfor må må jeg enten mellomlagre alle hash addressene til Voter kontraktene i en egen database, 
+Har 2 smart kontrakter: Election (Stemmeseddel) og Voter. Vanlige folk som oss skal kunne lage en Voter gjennom dette 
+grensesnittet (bruker min wallet addresse), og kun disse skal kunne brukes til å stemme i Election. Hver Election tar inn 
+Voter[] voters som parameter i sin konstruktor. 
+Så derfor må må jeg enten mellomlagre alle hash addressene til Voter kontraktene i en egen database, 
 eller hente de ut fra Ethereums blockchain. Jeg har da valgt det sistnevnte. 
 For å gjøre dette så looper jeg over alle blokkene mellom x og y i blockchainen og leter etter transaksjoner gjort med 
-min wallet addressene. Etter jeg har funnet alle transaksjoene bruker jeg deres transaksjons addresse (hash) til å 
+min wallet addressene. Etter jeg har funnet alle transaksjoene bruker jeg deres transaksjons adresse (hash) til å 
 finne alle Voter kontraktene som er deployet på blockchainen. Etter å ha validert at dette er riktige kontrakter 
-gjennom å sjekke deres checksum, så lager jeg en array av Voter kontraktenes adresse, og sender den inn i konstruktoren til Ballot.
+gjennom å sjekke deres checksum, så lager jeg en array av Voter kontraktenes adresse, og sender den inn i konstruktoren til Election.

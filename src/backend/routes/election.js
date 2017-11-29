@@ -3,22 +3,22 @@
  */
 const express = require("express");
 const router = express.Router();
-const { deployBallotContract } = require("../models/ballot");
+const { deployElectionContract } = require("../models/election");
 
 /**
  * Route for creating new Voter contracts.
  */
 router.post("/", (req, res) => {
     console.log(req.body);
-    if (!req.body.ballotName || !req.body.candidateList || !req.body.daysUntilExpire) {
+    if (!req.body.electionName || !req.body.candidateList || !req.body.daysUntilExpire) {
         res.status(400).send({
             success: false,
-            message: "request body is missing attribute: ballotName, candidateList or daysUntilExpire"
+            message: "request body is missing attribute: electionName, candidateList or daysUntilExpire"
         });
         return;
     }
 
-    deployBallotContract(req.body.ballotName, req.body.candidateList, req.body.daysUntilExpire, (err, result) => {
+    deployElectionContract(req.body.electionName, req.body.candidateList, req.body.daysUntilExpire, (err, result) => {
         if (err) {
             res.status(500).send({
                 success: false,

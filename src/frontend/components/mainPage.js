@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import RegisterVoter from "./registerVoter";
-import RegisterBallot from "./registerBallot";
+import RegisterElection from "./registerElection";
 
 import logo from "./logo.svg";
 import "./App.css";
@@ -14,7 +14,7 @@ class MainPage extends Component {
           <h1 className="App-title">Welcome to Democrazy 2.0</h1>
         </header>
           <div>
-              <RegisterBallot />
+              <RegisterVoter />
           </div>
       </div>
     );

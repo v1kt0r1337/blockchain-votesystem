@@ -2,21 +2,21 @@
  * Created by archheretic on 28.11.17.
  */
 import React from "react";
-import { postBallot } from "../apiConsumer/ballots";
+import { postElection } from "../apiConsumer/elections";
 const uuidv4 = require("uuid/v4");
 
-class RegisterBallot extends React.Component {
+class RegisterElection extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ballotName : "",
+            electionName : "",
             daysUntilExpire: 0,
             candidateElementList: []
         };
         this.candidates = new Map();
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.changeBallotName = this.changeBallotName.bind(this);
+        this.changeElectionName = this.changeElectionName.bind(this);
         this.changeCandidateList = this.changeCandidateList.bind(this);
         this.changeDaysUntilExpire = this.changeDaysUntilExpire.bind(this);
         this.addCandidateButton = this.addCandidateButton.bind(this);
@@ -32,13 +32,13 @@ class RegisterBallot extends React.Component {
                 <h1>Register new election</h1>
                 <form role="form" onSubmit={this.handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="ballotName">Election name</label>
+                        <label htmlFor="electionName">Election name</label>
                         <div>
                             <input
                                 type="text"
                                 className="form-control"
                                 placeholder="Stortingsvalg 2017"
-                                onChange={this.changeBallotName}
+                                onChange={this.changeElectionName}
                             />
                         </div>
                     </div>
@@ -88,8 +88,8 @@ class RegisterBallot extends React.Component {
         this.setState({candidateElementList});
     };
 
-    changeBallotName = (event) => {
-        this.setState({ballotName: event.target.value});
+    changeElectionName = (event) => {
+        this.setState({electionName: event.target.value});
     };
 
     changeCandidateList = (event) => {
@@ -110,11 +110,11 @@ class RegisterBallot extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const candidateList = Array.from(this.candidates.values());
-        if (!this.state.ballotName || candidateList.length >= 2  || !this.state.daysUntilExpire) {
+        if (!this.state.electionName || candidateList.length >= 2  || !this.state.daysUntilExpire) {
             alert("Fill out all fields");
         }
         else {
-            postBallot(this.state.ballotName, candidateList, this.state.daysUntilExpire, (err, result) => {
+            postElection(this.state.electionName, candidateList, this.state.daysUntilExpire, (err, result) => {
                 if (!err) {
                     alert("Your contract is being deployed in transaction at: " + result.message);
                 }
@@ -126,4 +126,4 @@ class RegisterBallot extends React.Component {
     }
 }
 
-export default RegisterBallot;
+export default RegisterElection;

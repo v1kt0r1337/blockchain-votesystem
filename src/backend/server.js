@@ -10,7 +10,7 @@ const rootPath = require("../../projectRootPath");
 
 // Our files
 const voter = require("./routes/voter");
-const ballot = require("./routes/ballot");
+const election = require("./routes/election");
 
 
 const app = express();
@@ -30,8 +30,7 @@ app.use(function(req, res, next) {
 
 // API routes (version api might be a bit overkill...)
 app.use("/api/voters", voter);
-app.use("/api/ballots", ballot);
-
+app.use("/api/elections", election);
 
 // Client entry point (React)
 // define the folder that will be used for static assets

@@ -25,12 +25,12 @@ const VoterDeployer = {
         const source = fs.readFileSync(path.join(contractPath, "contracts.json"));
         const contracts = JSON.parse(source)["contracts"];
         // ABI (APPLICATION BINARY INTERFACE) description as JSON structure
-        const abi = JSON.parse(contracts["Ballot.sol:Voter"].abi);
+        const abi = JSON.parse(contracts["Election.sol:Voter"].abi);
         // Smart contract EVM bytecode as hex
-        const code = '0x' + contracts["Ballot.sol:Voter"].bin;
+        const code = '0x' + contracts["Election.sol:Voter"].bin;
         // Create Contract proxy class
         // console.log(abi);
-        // console.log('0x' + contracts["Ballot.sol:Voter"]["bin-runtime"]);
+        // console.log('0x' + contracts["Election.sol:Voter"]["bin-runtime"]);
         const contract = web3.eth.contract(abi);
         return {VoterContract: contract, code};
     },
@@ -81,7 +81,7 @@ const VoterDeployer = {
     getVoterContractCheckSum: function () {
         const source = fs.readFileSync(path.join(contractPath, "contracts.json"));
         const contracts = JSON.parse(source)["contracts"];
-        const binary = "0x" + contracts["Ballot.sol:Voter"]["bin-runtime"];
+        const binary = "0x" + contracts["Election.sol:Voter"]["bin-runtime"];
         return web3.sha3(binary);
     },
 
