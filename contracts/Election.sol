@@ -53,9 +53,9 @@ contract Election {
      */
     modifier hasVoted() {
         Voter voter = Voter(msg.sender);
+        var (votersCreator, votersHash)= voter.getIdentifiers();
         for(uint i = 0; i < voters.length; i++) {
             var (validCreator, validHash) = voters[i].getIdentifiers();
-            var (votersCreator, votersHash)= voter.getIdentifiers();
             if (validHash == votersHash) {
                 revert();
             }
@@ -69,8 +69,6 @@ contract Election {
         if (validCandidate(candidate) == false) {
             revert();
         }
-        Voter voter = Voter(msg.sender);
-        voters.push(voter);
         return votesReceived[candidate];
     }
 
@@ -79,6 +77,8 @@ contract Election {
     function voteForCandidate(bytes32 candidate) hasVotingExpired hasVoted {
         if (!validCandidate(candidate)) revert();
         votesReceived[candidate] += 1;
+        Voter voter = Voter(msg.sender);
+        voters.push(voter);
     }
 
     function validCandidate(bytes32 candidate) constant returns (bool) {
@@ -108,9 +108,9 @@ contract Election {
     /**
      * Lacks any error handling
      */
-    function getTotalVotesFor(bytes32 candidate) view public returns (uint8) {
-        return votesReceived[candidate];
-    }
+    // function getTotalVotesFor(bytes32 candidate) view public returns (uint8) {
+    //     return votesReceived[candidate];
+    // }
 }
 
 pragma solidity ^0.4.18;
@@ -148,13 +148,12 @@ contract Voter {
     modifier hasValidCredentials(uint ssn, bytes32 password) {
         bytes32 identifyingHash = createIdentifyingHash(ssn, password);
         if (identifyingHash == identifiers.identifyingHash) {
-            revert();
+            _;
         }
         // This basically means continue
-        _;
+        revert();
     }
-    function vote(bytes32 candidate, address electionContract, uint ssn, bytes32 password)
-    hasValidCredentials(ssn, password) {
+    function vote(bytes32 candidate, address electionContract, uint ssn, bytes32 password) {
         Election election = Election(electionContract);
         election.voteForCandidate(candidate);
     }
@@ -186,3 +185,9 @@ contract Voter {
     //        return code;
     //    }
 }
+
+//
+//  1234, "74657374"
+// "74657374", ["4a616e6973", "48616c6c67656972"], 1, ["0xa113b22d40dc1d5d086003c27a556e597f614e8b"]
+// "4a616e6973", "0xd25ed029c093e56bc8911a07c46545000cbf37c6", 1234, "74657374"
+//
