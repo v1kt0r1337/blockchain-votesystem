@@ -3,7 +3,7 @@
  */
 const express = require("express");
 const router = express.Router();
-const { deployElectionContract, getElectionCandidates } = require("../models/election");
+const { deployElectionContract, getElectionCandidates, getElectionResult } = require("../models/election");
 
 /**
  * Route for creating new Voter contracts.
@@ -53,4 +53,29 @@ router.get("/electionCandidates/:contractAddress", (req, res) => {
         }
     });
 });
+
+router.get("/results/:contractAddress", (req, res) => {
+    if (!req.params.contractAddress) {
+        res.status(400).send({
+            success: false,
+            message: "missing parameter"
+        });
+        return;
+    }
+
+    getElectionResult(req.params.contractAddress, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send({
+                success: false,
+                message: err
+            });
+        }
+        else {
+            console.log(result);
+            res.json({electionResult: result});
+        }
+    });
+});
+
 module.exports = router;

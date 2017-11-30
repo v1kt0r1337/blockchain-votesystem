@@ -20,10 +20,22 @@ function deployVoterContract(ssn, password, callback) {
     contractDeploymentInfo(contract, callback);
 }
 
-function vote(electionAddress, chosenCandidate, ssn, password, callback) {
+function vote(electionAddress, voterAddress, chosenCandidate, ssn, password, callback) {
     const {VoterContract, code} = getVoterContract();
+    const contract = VoterContract.at(voterAddress);
     openWallet();
-    const contract = VoterContract.at()
+    console.log(chosenCandidate);
+    console.log(electionAddress);
+    console.log(ssn);
+    console.log(password);
+    contract.vote.sendTransaction(chosenCandidate, electionAddress, ssn, password, {from: web3.eth.coinbase,to: electionAddress, gas: 1000000}, (err, result) => {
+        if (err) {
+            callback(err);
+        }
+        else {
+            callback(null, "https://ropsten.etherscan.io/tx/" + result);
+        }
+    });
 }
 
 /**
@@ -63,4 +75,4 @@ function getVoterContractCheckSum() {
     return web3.sha3(binary);
 }
 
-module.exports = {deployVoterContract, getVotersAddressesFromBlockchain};
+module.exports = {deployVoterContract, getVotersAddressesFromBlockchain, vote};

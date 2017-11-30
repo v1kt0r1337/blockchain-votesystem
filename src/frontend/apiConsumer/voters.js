@@ -3,8 +3,8 @@ import baseConsumer from "./baseConsumer";
 function postVoter(ssn, password, callback) {
     const route = "voters/";
     const data = {
-        ssn: ssn,
-        password: password
+        ssn,
+        password
     };
     baseConsumer.postJSON(route, data, (err, data) => {
         if (!err) {
@@ -16,10 +16,11 @@ function postVoter(ssn, password, callback) {
     });
 }
 
-function postVote(electionAddress, chosenCandidate, ssn, password, callback) {
+function postVote(electionAddress, voterAddress, chosenCandidate, ssn, password, callback) {
     const route = "voters/vote";
     const data = {
         electionAddress,
+        voterAddress,
         chosenCandidate,
         ssn,
         password

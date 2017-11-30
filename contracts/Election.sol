@@ -104,6 +104,13 @@ contract Election {
     function getCandidateList() constant returns (bytes32[]) {
         return candidateList;
     }
+
+    /**
+     * Lacks any error handling
+     */
+    function getTotalVotesFor(bytes32 candidate) view public returns (uint8) {
+        return votesReceived[candidate];
+    }
 }
 
 pragma solidity ^0.4.18;

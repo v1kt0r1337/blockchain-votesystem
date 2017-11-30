@@ -32,7 +32,20 @@ function getElectionCandidates(electionContractAddress, callback) {
     });
 }
 
+function getElectionResult(electionContractAddress, callback) {
+    const route = "elections/results/";
+    baseConsumer.getJSON(route, electionContractAddress, (err, data) => {
+        if (!err) {
+            callback(null, data);
+        }
+        else {
+            callback(err);
+        }
+    });
+}
+
 export {
     postElection,
-    getElectionCandidates
+    getElectionCandidates,
+    getElectionResult
 };

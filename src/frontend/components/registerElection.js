@@ -14,11 +14,6 @@ class RegisterElection extends React.Component {
             candidateElementList: []
         };
         this.candidates = new Map();
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.changeElectionName = this.changeElectionName.bind(this);
-        this.changeCandidateList = this.changeCandidateList.bind(this);
-        this.changeDaysUntilExpire = this.changeDaysUntilExpire.bind(this);
-        this.addCandidateButton = this.addCandidateButton.bind(this);
     }
 
     componentWillMount() {

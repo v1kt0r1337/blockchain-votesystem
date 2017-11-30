@@ -44,7 +44,36 @@ function getElectionCandidates(contractAddress, callback) {
     });
 }
 
+function getElectionResult(contractAddress, callback) {
+    getElectionCandidates(contractAddress, (err, candidates) => {
+        if (err) {
+            callback(err);
+        }
+
+        else {
+            const {ElectionContract, code} = getElectionContract();
+            const results = [];
+            let error;
+            for (const candidate of candidates) {
+                const electionContract = ElectionContract.at(contractAddress);
+                electionContract.votesReceived.call(candidate, {from: web3.eth.coinbase, to: contractAddress}, (err, result) => {
+                    if (err) {
+                        error = err;
+                    }
+                    else {
+                        results.push({candidate:candidate, votes: result});
+                    }
+                    if (results.length === candidates.length) {
+                        callback(error, results);
+                    }
+                });
+            }
+        }
+    });
+}
+
 module.exports = {
     deployElectionContract,
-    getElectionCandidates
+    getElectionCandidates,
+    getElectionResult,
 };
