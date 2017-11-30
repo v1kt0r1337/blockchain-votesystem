@@ -30,4 +30,21 @@ function getElectionContract() {
     return {ElectionContract: contract, code};
 }
 
-module.exports = { deployElectionContract };
+function getElectionCandidates(contractAddress, callback) {
+    const {ElectionContract, code} = getElectionContract();
+    const electionContract = ElectionContract.at(contractAddress);
+    electionContract.getCandidateList.call({from: web3.eth.coinbase,to: contractAddress}, (err, result) => {
+        if (err) {
+            callback(err);
+        }
+        else {
+            const parsedResult = result.map((e) => web3.toUtf8(e));
+            callback(null, parsedResult);
+        }
+    });
+}
+
+module.exports = {
+    deployElectionContract,
+    getElectionCandidates
+};

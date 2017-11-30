@@ -14,7 +14,6 @@ class RegisterElection extends React.Component {
             candidateElementList: []
         };
         this.candidates = new Map();
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeElectionName = this.changeElectionName.bind(this);
         this.changeCandidateList = this.changeCandidateList.bind(this);
@@ -30,9 +29,9 @@ class RegisterElection extends React.Component {
         return (
             <div className="register">
                 <h1>Register new election</h1>
-                <form role="form" onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="electionName">Election name</label>
+                        <label>Election name</label>
                         <div>
                             <input
                                 type="text"
@@ -44,7 +43,7 @@ class RegisterElection extends React.Component {
                     </div>
                     <br/>
                     <div className="form-group">
-                        <label htmlFor="candidateList">Candidate list</label>
+                        <label>Candidate list</label>
                     </div>
                     <div>
                         {this.state.candidateElementList}
@@ -54,7 +53,7 @@ class RegisterElection extends React.Component {
                     </div>
                     <br/>
                     <div className="form-group">
-                        <label htmlFor="daysUntilExpire">How many days should the election last?</label>
+                        <label>How many days should the election last?</label>
                         <div>
                             <input
                                 type="number"
@@ -110,7 +109,8 @@ class RegisterElection extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const candidateList = Array.from(this.candidates.values());
-        if (!this.state.electionName || candidateList.length >= 2  || !this.state.daysUntilExpire) {
+        // denne er bugga candidateList.length <= 2
+        if (!this.state.electionName || candidateList.length <= 2  || !this.state.daysUntilExpire) {
             alert("Fill out all fields");
         }
         else {

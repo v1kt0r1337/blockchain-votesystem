@@ -20,4 +20,19 @@ function postElection(electionName, candidateList, daysUntilExpire, callback) {
     });
 }
 
-export {postElection};
+function getElectionCandidates(electionContractAddress, callback) {
+    const route = "elections/electionCandidates/";
+    baseConsumer.getJSON(route, electionContractAddress, (err, data) => {
+        if (!err) {
+            callback(null, data);
+        }
+        else {
+            callback(err);
+        }
+    });
+}
+
+export {
+    postElection,
+    getElectionCandidates
+};

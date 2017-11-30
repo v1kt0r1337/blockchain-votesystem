@@ -100,6 +100,10 @@ contract Election {
         }
         return false;
     }
+
+    function getCandidateList() constant returns (bytes32[]) {
+        return candidateList;
+    }
 }
 
 pragma solidity ^0.4.18;

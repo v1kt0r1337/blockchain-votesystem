@@ -20,6 +20,12 @@ function deployVoterContract(ssn, password, callback) {
     contractDeploymentInfo(contract, callback);
 }
 
+function vote(electionAddress, chosenCandidate, ssn, password, callback) {
+    const {VoterContract, code} = getVoterContract();
+    openWallet();
+    const contract = VoterContract.at()
+}
+
 /**
  * Returns all voters on the blockchain created from the wallet address in specified in the config files.
  */
