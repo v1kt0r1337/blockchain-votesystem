@@ -19,23 +19,23 @@ class Vote extends React.Component {
             candidateRadioButtons: null,
             chosenCandidate: "",
         };
-        console.log("Election 1 expire: 10 day");
-        console.log("0x99087bc1747da8B90e78d2B8De1305fC9f3f44fc");
-        // console.log("Election 2 expire: 100 day");
-        // console.log("0xe76397aadcae5a5d0d50748de9711581d947eb57");
-        console.log("voter1: block 2174225");
+        console.log("Election 1 expire: 1 day");
+        console.log("0xa3e77f10404085e843823f499caad175c5c2eb87");
+        console.log("Election 2 expire: 100 day");
+        console.log("0x9939bC241Da64044395238ede0518afE02eea08F");
+        console.log("voter1: block 2175857");
         console.log("ssn: 123 pwd: test ");
-        console.log("0x357f66af37edb7c3c0f07fe27a4f636dbd5ace32");
+        console.log("0x9370b3879997352c01b466adb13f3364a244a03f");
         console.log("voter2: block 2174241");
         console.log("ssn: 1234 pwd: test ");
-        console.log("0x0961fF8D2f6552D2b7B764e99787424f1F61981b");
+        console.log("0x3014d0E4045e8219a2908b327c47de40Fa4fC3b1");
         console.log("voter3: block 2174247");
         console.log("ssn: 12345 pwd: test ");
-        console.log("0xBaeeF001f85d209D0c7CfF667a256B0985414926");
+        console.log("0x1f095c9587873F5Fa4e596D75c5217ce45B33903");
     }
 
     componentWillMount() {
-        getElectionResult("0x99087bc1747da8B90e78d2B8De1305fC9f3f44fc", (err, result) => {
+        getElectionResult("0xa3e77f10404085e843823f499caad175c5c2eb87", (err, result) => {
            if (err) {
                console.log(err);
            }

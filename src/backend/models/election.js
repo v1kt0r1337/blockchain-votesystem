@@ -56,7 +56,7 @@ function getElectionResult(contractAddress, callback) {
             let error;
             for (const candidate of candidates) {
                 const electionContract = ElectionContract.at(contractAddress);
-                electionContract.votesReceived.call(candidate, {from: web3.eth.coinbase, to: contractAddress}, (err, result) => {
+                electionContract.totalVotesFor.call(candidate, {from: web3.eth.coinbase, to: contractAddress}, (err, result) => {
                     if (err) {
                         error = err;
                     }
