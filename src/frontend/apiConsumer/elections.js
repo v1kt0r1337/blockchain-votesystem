@@ -32,7 +32,7 @@ function getElectionCandidates(electionContractAddress, callback) {
     });
 }
 
-function getElectionResult(electionContractAddress, callback) {
+function getElectionResults(electionContractAddress, callback) {
     const route = "elections/results/";
     baseConsumer.getJSON(route, electionContractAddress, (err, data) => {
         if (!err) {
@@ -47,5 +47,5 @@ function getElectionResult(electionContractAddress, callback) {
 export {
     postElection,
     getElectionCandidates,
-    getElectionResult
+    getElectionResults
 };

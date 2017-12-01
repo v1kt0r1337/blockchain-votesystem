@@ -3,7 +3,7 @@
  */
 const express = require("express");
 const router = express.Router();
-const { deployElectionContract, getElectionCandidates, getElectionResult } = require("../models/election");
+const { deployElectionContract, getElectionCandidates, getElectionResults } = require("../models/election");
 
 /**
  * Route for creating new Voter contracts.
@@ -63,7 +63,7 @@ router.get("/results/:contractAddress", (req, res) => {
         return;
     }
 
-    getElectionResult(req.params.contractAddress, (err, result) => {
+    getElectionResults(req.params.contractAddress, (err, result) => {
         if (err) {
             console.log(err);
             res.status(500).send({

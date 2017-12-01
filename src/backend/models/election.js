@@ -44,7 +44,7 @@ function getElectionCandidates(contractAddress, callback) {
     });
 }
 
-function getElectionResult(contractAddress, callback) {
+function getElectionResults(contractAddress, callback) {
     getElectionCandidates(contractAddress, (err, candidates) => {
         if (err) {
             callback(err);
@@ -75,5 +75,5 @@ function getElectionResult(contractAddress, callback) {
 module.exports = {
     deployElectionContract,
     getElectionCandidates,
-    getElectionResult,
+    getElectionResults,
 };

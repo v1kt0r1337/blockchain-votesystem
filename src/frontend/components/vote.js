@@ -2,7 +2,7 @@
  * Created by archheretic on 29.11.17.
  */
 import React from "react";
-import { getElectionCandidates, getElectionResult } from "../apiConsumer/elections";
+import { getElectionCandidates } from "../apiConsumer/elections";
 import { postVote } from "../apiConsumer/voters";
 
 import UserCredentialsFormFields from "./userCredentialsFormFields";
@@ -32,17 +32,6 @@ class Vote extends React.Component {
         console.log("voter3: block 2174247");
         console.log("ssn: 12345 pwd: test ");
         console.log("0x1f095c9587873F5Fa4e596D75c5217ce45B33903");
-    }
-
-    componentWillMount() {
-        getElectionResult("0xa3e77f10404085e843823f499caad175c5c2eb87", (err, result) => {
-           if (err) {
-               console.log(err);
-           }
-           else {
-               console.log(result);
-           }
-        });
     }
 
     render() {
