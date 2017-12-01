@@ -23,7 +23,7 @@ function openWallet(duration=120) {
     }
 }
 
-function getWalletsContractAddresses(startBlockNumber=2175857, endBlockNumber=2175871, walletAddress=config.address) {
+function getWalletsContractAddresses(startBlockNumber, endBlockNumber, walletAddress=config.address) {
     const txHashes = getTxHashesFromWalletAddress(startBlockNumber, endBlockNumber, walletAddress);
     // There is a chance that there is no contracts on that transaction, so we need to filter away undefined.
     const contractAddresses = txHashes.map(txHash => getContractFromTxHash(txHash)).filter(e => e != undefined);
@@ -32,9 +32,6 @@ function getWalletsContractAddresses(startBlockNumber=2175857, endBlockNumber=21
 }
 
 function getTxHashesFromWalletAddress(startBlockNumber, endBlockNumber, myAddress) {
-    if (!startBlockNumber) {
-        startBlockNumber = 0;
-    }
     if (!endBlockNumber) {
         endBlockNumber = web3.eth.blockNumber;
     }

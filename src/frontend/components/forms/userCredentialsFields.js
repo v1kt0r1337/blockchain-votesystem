@@ -15,7 +15,8 @@ class UserCredentialsFields extends React.Component {
                 <div>
                     <label>SSN </label>
                     <input
-                        type="text"
+                        type="number"
+                        step="1"
                         className="form-control"
                         id="ssn"
                         placeholder="Social security number"

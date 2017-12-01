@@ -3,6 +3,7 @@
  */
 import React from "react";
 import { postElection } from "../apiConsumer/elections";
+import BlockRangeField from "./forms/blockRangeField"
 const uuidv4 = require("uuid/v4");
 
 class RegisterElection extends React.Component {
@@ -11,7 +12,9 @@ class RegisterElection extends React.Component {
         this.state = {
             electionName : "",
             daysUntilExpire: 0,
-            candidateElementList: []
+            candidateElementList: [],
+            startBlockNumber: 0,
+            endBlockNumber: 0,
         };
         this.candidates = new Map();
     }
@@ -35,6 +38,10 @@ class RegisterElection extends React.Component {
                             />
                         </div>
                     </div>
+                    <br/>
+                    <BlockRangeField label="Voter Contract block range"
+                                     changeStartBlockNumber={this.changeStartBlockNumber}
+                                     changeEndBlockNumber={this.changeEndBlockNumber} />
                     <br/>
                     <div>
                         <label>Candidate list</label>
@@ -102,11 +109,17 @@ class RegisterElection extends React.Component {
         event.preventDefault();
         const candidateList = Array.from(this.candidates.values());
         // denne er bugga candidateList.length <= 2
-        if (!this.state.electionName || candidateList.length <= 2  || !this.state.daysUntilExpire) {
+        if (!this.state.electionName || candidateList.length <= 2
+            || !this.state.daysUntilExpire || !this.state.startBlockNumber) {
             alert("Fill out all fields");
+            return;
+        }
+        if (this.state.endBlockNumber && (this.state.endBlockNumber < this.state.startBlockNumber)) {
+            alert("End Block must either be left blank or be a greater number then Start Block");
         }
         else {
-            postElection(this.state.electionName, candidateList, this.state.daysUntilExpire, (err, result) => {
+            postElection(this.state.electionName, candidateList, this.state.daysUntilExpire,
+                this.state.startBlockNumber, this.state.endBlockNumber, (err, result) => {
                 if (!err) {
                     alert("Your contract is being deployed in transaction at: " + result.message);
                 }
@@ -115,7 +128,15 @@ class RegisterElection extends React.Component {
                 }
             });
         }
-    }
+    };
+
+    changeStartBlockNumber = (event) => {
+        this.setState({startBlockNumber: event.target.value});
+    };
+
+    changeEndBlockNumber = (event) => {
+        this.setState({endBlockNumber: event.target.value});
+    };
 }
 
 export default RegisterElection;

@@ -9,15 +9,18 @@ const { deployElectionContract, getElectionCandidates, getElectionResults } = re
  * Route for creating new Voter contracts.
  */
 router.post("/", (req, res) => {
-    if (!req.body.electionName || !req.body.candidateList || !req.body.daysUntilExpire) {
+    if (!req.body.electionName || !req.body.candidateList || !req.body.daysUntilExpire
+        || !req.body.startBlockNumber) {
         res.status(400).send({
             success: false,
-            message: "request body is missing attribute: electionName, candidateList or daysUntilExpire"
+            message: "request body is missing one or multiple of the follow attributes: electionName, candidateList, " +
+            "daysUntilExpire, firstBlock or lastBlock"
         });
         return;
     }
 
-    deployElectionContract(req.body.electionName, req.body.candidateList, req.body.daysUntilExpire, (err, result) => {
+    deployElectionContract(req.body.electionName, req.body.candidateList, req.body.daysUntilExpire,
+        req.body.startBlockNumber, req.body.endBlockNumber, (err, result) => {
         if (err) {
             res.status(500).send({
                 success: false,

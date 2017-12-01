@@ -41,9 +41,9 @@ function vote(electionAddress, voterAddress, chosenCandidate, ssn, password, cal
 /**
  * Returns all voters on the blockchain created from the wallet address in specified in the config files.
  */
-function getVotersAddressesFromBlockchain() {
+function getVotersAddressesFromBlockchain(firstBlock, lastBlock) {
     const {VoterContract, code} = getVoterContract();
-    const contractAddresses = getWalletsContractAddresses();
+    const contractAddresses = getWalletsContractAddresses(firstBlock, lastBlock);
     const potentialVoters = contractAddresses.map(e => VoterContract.at(e));
     const voters = potentialVoters.filter(e => e != isVoter(e));
     return voters.map(e => e.address);

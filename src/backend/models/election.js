@@ -11,11 +11,12 @@ const { getVotersAddressesFromBlockchain } = require("./voter");
 const address = "http://localhost:8545";
 web3.setProvider(new web3.providers.HttpProvider(address));
 
-function deployElectionContract(electionName, candidateList, daysUntilExpire, callback) {
+function deployElectionContract(electionName, candidateList, daysUntilExpire, startBlockNumber, endBlockNumber, callback) {
     const {ElectionContract, code} = getElectionContract();
-    const voters = getVotersAddressesFromBlockchain();
+    const voters = getVotersAddressesFromBlockchain(startBlockNumber, endBlockNumber);
     openWallet();
-    const contract = ElectionContract.new(electionName, candidateList, daysUntilExpire, voters, {from: web3.eth.coinbase, gas: 1000000, data: code});
+    const contract = ElectionContract.new(electionName, candidateList, daysUntilExpire, voters,
+        {from: web3.eth.coinbase, gas: 1000000, data: code});
     contractDeploymentInfo(contract, callback);
 }
 

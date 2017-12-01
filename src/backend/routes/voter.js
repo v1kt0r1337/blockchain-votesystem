@@ -35,15 +35,19 @@ router.post("/", (req, res) => {
  */
 router.post("/vote", (req, res) => {
     // console.log(req.body);
-    if (!req.body.electionAddress || !req.body.voterAddress || !req.body.chosenCandidate || !req.body.ssn || !req.body.password) {
+    if (!req.body.electionAddress || !req.body.voterAddress || !req.body.chosenCandidate
+        || !req.body.ssn || !req.body.password
+            ) {
         res.status(400).send({
             success: false,
-            message: "request body is missing one or multiple of the following: electionAddress, chosenCandidate, snn or password"
+            message: "request body is missing one or multiple of the following: " +
+            "electionAddress, chosenCandidate, snn or password"
         });
         return;
     }
 
-    vote(req.body.electionAddress, req.body.voterAddress, req.body.chosenCandidate, req.body.ssn, req.body.password, (err, result) => {
+    vote(req.body.electionAddress, req.body.voterAddress, req.body.chosenCandidate,
+        req.body.ssn, req.body.password, (err, result) => {
         if (err) {
             res.status(500).send({
                 success: false,

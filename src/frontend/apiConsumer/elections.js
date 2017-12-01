@@ -3,12 +3,14 @@
  */
 import baseConsumer from "./baseConsumer";
 
-function postElection(electionName, candidateList, daysUntilExpire, callback) {
+function postElection(electionName, candidateList, daysUntilExpire, startBlockNumber, endBlockNumber, callback) {
     const route = "elections/";
     const data = {
         electionName,
         candidateList,
-        daysUntilExpire
+        daysUntilExpire,
+        startBlockNumber,
+        endBlockNumber,
     };
     baseConsumer.postJSON(route, data, (err, data) => {
         if (!err) {
