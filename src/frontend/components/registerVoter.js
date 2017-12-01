@@ -3,7 +3,7 @@
  */
 import React from "react";
 import { postVoter} from "../apiConsumer/voters";
-import UserCredentialsFormFields from "./userCredentialsFormFields";
+import UserCredentialsFields from "./forms/userCredentialsFields";
 
 class RegisterVoter extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class RegisterVoter extends React.Component {
             <div className="register">
                 <h1>Register new Voter</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <UserCredentialsFormFields changeSSN={this.changeSSN} changePassword={this.changePassword} />
+                    <UserCredentialsFields changeSSN={this.changeSSN} changePassword={this.changePassword} />
                     <input type="submit" value="Submit" />
                 </form>
             </div>

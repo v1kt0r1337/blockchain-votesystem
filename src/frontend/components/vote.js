@@ -5,7 +5,8 @@ import React from "react";
 import { getElectionCandidates } from "../apiConsumer/elections";
 import { postVote } from "../apiConsumer/voters";
 
-import UserCredentialsFormFields from "./userCredentialsFormFields";
+import ContractAddressField from "./forms/contractAddressField";
+import UserCredentialsFields from "./forms/userCredentialsFields";
 const uuidv4 = require("uuid/v4");
 
 class Vote extends React.Component {
@@ -40,18 +41,7 @@ class Vote extends React.Component {
                 <h1>Election</h1>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
-                        <label>Insert election contract address</label>
-                        <div>
-                            <input
-                                type="text"
-                                className="form-control"
-                                size="49"
-                                minLength="42"
-                                maxLength="42"
-                                placeholder="0xe76397aadcae5a5d0d50748de9711581d947eb57"
-                                onChange={this.changeElectionAddress}
-                            />
-                        </div>
+                        <ContractAddressField label="Insert election contract address" changeContractAddress={this.changeElectionAddress} />
                     </div>
                         {this.state.candidates ? (
                             <div>
@@ -78,21 +68,10 @@ class Vote extends React.Component {
                                     <label>Your voter credentials</label>
                                 </div>
                                 <div>
-                                    <UserCredentialsFormFields changeSSN={this.changeSSN} changePassword={this.changePassword} />
+                                    <UserCredentialsFields changeSSN={this.changeSSN} changePassword={this.changePassword} />
                                 </div>
                                 <div>
-                                    <label>Insert your Voter contract address</label>
-                                    <div>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            size="49"
-                                            minLength="42"
-                                            maxLength="42"
-                                            placeholder="0x357f66af37edb7c3c0f07fe27a4f636dbd5ace32"
-                                            onChange={this.changeVoterAddress}
-                                        />
-                                    </div>
+                                    <ContractAddressField label="Insert your Voter contract address" changeContractAddress={this.changeVoterAddress} />
                                 </div>
                             </div>
                                    ) : null }

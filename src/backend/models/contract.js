@@ -33,7 +33,6 @@ function contractDeploymentInfo(contract, callback) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-
     // We need to wait until any miner has included the transaction
     // in a block to get the address of the contract
     // (This logic is probably not healthy in a bigger production setting)
@@ -51,6 +50,5 @@ function contractDeploymentInfo(contract, callback) {
     }
     waitBlock();
 }
-
 
 module.exports = {getContracts, contractDeploymentInfo};

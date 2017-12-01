@@ -3,7 +3,7 @@
  */
 import React from "react";
 
-class UserCredentialsFormFields extends React.Component {
+class UserCredentialsFields extends React.Component {
     constructor(props) {
         super(props);
         this.changeSSN = this.props.changeSSN.bind(this);
@@ -13,7 +13,7 @@ class UserCredentialsFormFields extends React.Component {
         return (
             <div>
                 <div className="form-group">
-                    <label htmlFor="name">SSN</label>
+                    <label htmlFor="name">SSN </label>
                     <input
                         type="text"
                         className="form-control"
@@ -23,7 +23,7 @@ class UserCredentialsFormFields extends React.Component {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Password </label>
                     <input
                         type="password"
                         className="form-control"
@@ -37,4 +37,4 @@ class UserCredentialsFormFields extends React.Component {
     }
 }
 
-export default UserCredentialsFormFields;
+export default UserCredentialsFields;

@@ -2,7 +2,7 @@
  * Created by archheretic on 01.12.17.
  */
 import React from "react";
-import ContractAddressField from "./contractAddressField";
+import ContractAddressField from "./forms/contractAddressField";
 import { getElectionResults } from "../apiConsumer/elections";
 
 class ElectionResults extends React.Component {
