@@ -37,10 +37,10 @@ class Vote extends React.Component {
 
     render() {
         return (
-            <div className="register">
+            <div>
                 <h1>Election</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
+                    <div>
                         <ContractAddressField label="Insert election contract address" changeContractAddress={this.changeElectionAddress} />
                     </div>
                         {this.state.candidates ? (

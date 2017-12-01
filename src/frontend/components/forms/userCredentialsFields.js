@@ -12,8 +12,8 @@ class UserCredentialsFields extends React.Component {
     render() {
         return (
             <div>
-                <div className="form-group">
-                    <label htmlFor="name">SSN </label>
+                <div>
+                    <label>SSN </label>
                     <input
                         type="text"
                         className="form-control"
@@ -22,8 +22,8 @@ class UserCredentialsFields extends React.Component {
                         onChange={this.changeSSN}
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password </label>
+                <div>
+                    <label>Password </label>
                     <input
                         type="password"
                         className="form-control"

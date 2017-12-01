@@ -22,22 +22,21 @@ class RegisterElection extends React.Component {
 
     render() {
         return (
-            <div className="register">
+            <div>
                 <h1>Register new election</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
+                    <div>
                         <label>Election name</label>
                         <div>
                             <input
                                 type="text"
-                                className="form-control"
                                 placeholder="Stortingsvalg 2017"
                                 onChange={this.changeElectionName}
                             />
                         </div>
                     </div>
                     <br/>
-                    <div className="form-group">
+                    <div>
                         <label>Candidate list</label>
                     </div>
                     <div>
@@ -47,12 +46,11 @@ class RegisterElection extends React.Component {
                         <button onClick={this.addCandidateButton}>Add candidate</button>
                     </div>
                     <br/>
-                    <div className="form-group">
+                    <div>
                         <label>How many days should the election last?</label>
                         <div>
                             <input
                                 type="number"
-                                className="form-control"
                                 placeholder="10"
                                 step="1"
                                 onChange={this.changeDaysUntilExpire}
@@ -69,11 +67,10 @@ class RegisterElection extends React.Component {
         const candidateElementList = this.state.candidateElementList;
         const key = uuidv4();
         candidateElementList.push(
-            <div className="form-group" key={key}>
+            <div key={key}>
                 <input
                     name={key}
                     type="text"
-                    className="form-control"
                     placeholder="Candidate name"
                     onChange={this.changeCandidateList}
                 />

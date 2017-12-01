@@ -12,7 +12,7 @@ class RegisterVoter extends React.Component {
 
     render() {
         return (
-            <div className="register">
+            <div>
                 <h1>Register new Voter</h1>
                 <form onSubmit={this.handleSubmit}>
                     <UserCredentialsFields changeSSN={this.changeSSN} changePassword={this.changePassword} />
