@@ -6,6 +6,7 @@ const web3 = new Web3();
 const config = require("config");
 const fs = require("fs");
 const path = require("path");
+const bcrypt = require("bcrypt");
 const { getContracts, contractDeploymentInfo } = require("./contract");
 const { getWalletsContractAddresses, openWallet } = require("../wallet");
 
@@ -14,28 +15,44 @@ const address = "http://localhost:8545";
 web3.setProvider(new web3.providers.HttpProvider(address));
 
 function deployVoterContract(ssn, password, callback) {
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(ssn + password, salt);
     const {VoterContract, code} = getVoterContract();
     openWallet();
-    const contract = VoterContract.new(ssn, password, {from: web3.eth.coinbase, gas: 1000000, data: code});
+    const contract = VoterContract.new(hash, salt, {from: web3.eth.coinbase, gas: 1000000, data: code});
     contractDeploymentInfo(contract, callback);
 }
 
 function vote(electionAddress, voterAddress, chosenCandidate, ssn, password, callback) {
     const {VoterContract, code} = getVoterContract();
     const contract = VoterContract.at(voterAddress);
+    console.log("test");
     openWallet();
-    console.log(chosenCandidate);
-    console.log(electionAddress);
-    console.log(ssn);
-    console.log(password);
-    contract.vote.sendTransaction(chosenCandidate, electionAddress, ssn, password, {from: web3.eth.coinbase,to: electionAddress, gas: 1000000}, (err, result) => {
+//    console.log(contract.getSalt.call());
+    contract.getSalt.call((err, salt) => {
         if (err) {
             callback(err);
         }
         else {
-            callback(null, "https://ropsten.etherscan.io/tx/" + result);
+            console.log(salt);
+            const hash = bcrypt.hashSync(ssn + password, salt);
+            contract.vote.sendTransaction(chosenCandidate, electionAddress, hash, {from: web3.eth.coinbase,to: electionAddress, gas: 1000000}, (err, result) => {
+                if (err) {
+                    callback(err);
+                }
+                else {
+                    callback(null, "https://ropsten.etherscan.io/tx/" + result);
+                }
+            });
         }
     });
+
+    // console.log(chosenCandidate);
+    // console.log(electionAddress);
+    // console.log(ssn);
+    // console.log(password);
+
 }
 
 /**
