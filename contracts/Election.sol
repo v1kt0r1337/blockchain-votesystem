@@ -28,7 +28,7 @@ contract Election {
     deploy the contract to the blockchain. When we deploy the contract,
     we will pass an array of candidates who will be contesting in the election
     */
-    function Election(bytes32 name, bytes32[] candidates, uint daysUntilExpire, Voter[] eligibleVoters) {
+    function Election(bytes32 name, bytes32[] candidates, uint daysUntilExpire, Voter[] eligibleVoters) public {
         electionName = name;
         candidateList = candidates;
         owner = msg.sender;
@@ -65,23 +65,22 @@ contract Election {
     }
 
     // This function returns the total votes a candidate has received so far
-    function totalVotesFor(bytes32 candidate) constant returns (uint8) {
-        if (validCandidate(candidate) == false) {
-            revert();
-        }
+    function totalVotesFor(bytes32 candidate) view public returns (uint8) {
+        if (!validCandidate(candidate)) revert();
         return votesReceived[candidate];
     }
 
     // This function increments the vote count for the specified candidate. This
     // is equivalent to casting a vote
-    function voteForCandidate(bytes32 candidate) hasVotingExpired hasVoted {
+    function voteForCandidate(bytes32 candidate) public hasVotingExpired hasVoted  {
+        if (!validVoter()) revert();
         if (!validCandidate(candidate)) revert();
         votesReceived[candidate] += 1;
         Voter voter = Voter(msg.sender);
         voters.push(voter);
     }
 
-    function validCandidate(bytes32 candidate) constant returns (bool) {
+    function validCandidate(bytes32 candidate) public view returns (bool) {
         for(uint i = 0; i < candidateList.length; i++) {
             if (candidateList[i] == candidate) {
                 return true;
@@ -90,7 +89,9 @@ contract Election {
         return false;
     }
 
-    function validVoter(Voter voter) constant returns (bool) {
+    // Cant be a modifier, due call stack gets too deep.
+    function validVoter() internal view returns (bool) {
+        Voter voter = Voter(msg.sender);
         for(uint i = 0; i < validVoters.length; i++) {
             var (validCreator, validHash) = validVoters[i].getIdentifiers();
             var (votersCreator, votersHash)= voter.getIdentifiers();
@@ -101,16 +102,9 @@ contract Election {
         return false;
     }
 
-    function getCandidateList() constant returns (bytes32[]) {
+    function getCandidateList() public view returns (bytes32[]) {
         return candidateList;
     }
-
-    /**
-     * Lacks any error handling
-     */
-    // function getTotalVotesFor(bytes32 candidate) view public returns (uint8) {
-    //     return votesReceived[candidate];
-    // }
 }
 
 pragma solidity ^0.4.18;
@@ -128,6 +122,7 @@ contract Voter {
     bytes32 identifyingHash;
     }
 
+    string salt;
     uint creationTime;
     uint expireTime;
     Identifiers identifiers;
@@ -136,8 +131,9 @@ contract Voter {
      * The parameters are used for creating the voters identifying hash.
      * ssn (sosial security number)
      */
-    function Voter(uint ssn, bytes32 password) {
-        bytes32 identifyingHash = createIdentifyingHash(ssn, password);
+    function Voter(string voterHash, string _salt) public {
+        salt = _salt;
+        bytes32 identifyingHash = createIdentifyingHash(voterHash);
         identifiers.creator = msg.sender;
         identifiers.identifyingHash = identifyingHash;
         creationTime = now;
@@ -145,49 +141,35 @@ contract Voter {
         expireTime = creationTime + 360 days;
     }
 
-    modifier hasValidCredentials(uint ssn, bytes32 password) {
-        bytes32 identifyingHash = createIdentifyingHash(ssn, password);
-        if (identifyingHash == identifiers.identifyingHash) {
-            _;
+    modifier hasValidCredentials(string voterHash) {
+        bytes32 identifyingHash = createIdentifyingHash(voterHash);
+        if (identifyingHash != identifiers.identifyingHash) {
+            revert();
         }
-        // This basically means continue
-        revert();
+        _;
     }
-    function vote(bytes32 candidate, address electionContract, uint ssn, bytes32 password) {
+
+    function vote(bytes32 candidate, address electionContract, string voterHash) public isCreator hasValidCredentials(voterHash) {
         Election election = Election(electionContract);
         election.voteForCandidate(candidate);
     }
 
-    function getIdentifiers() constant returns (address, bytes32) {
+    function getIdentifiers() view public returns (address, bytes32) {
         return (identifiers.creator, identifiers.identifyingHash);
     }
 
-    function createIdentifyingHash(uint ssn, bytes32 password) constant private returns (bytes32) {
-        return keccak256(ssn, password);
+    function createIdentifyingHash(string voterHash) pure private returns (bytes32) {
+        return keccak256(voterHash);
     }
 
-    // How the getCode works:
-    //    function getCode(address _addr) public view returns (bytes) {
-    //
-    //        bytes memory code;
-    //        assembly {
-    //            // code size
-    //            let size := extcodesize(_addr)
-    //            // set code pointer value to free memory
-    //            code := mload(0x40)
-    //            // new "memory end" including padding
-    //            mstore(0x40, add(code, and(add(add(size, 0x20), 0x1f), not(0x1f))))
-    //            // store length in memory
-    //            mstore(code, size)
-    //            // actually retrieve the code, this needs assembly
-    //            extcodecopy(_addr, add(code, 0x20), 0, size)
-    //        }
-    //        return code;
-    //    }
-}
+    modifier isCreator() {
+        if (identifiers.creator != msg.sender)  {
+            revert();
+        }
+        _;
+    }
 
-//
-//  1234, "74657374"
-// "74657374", ["4a616e6973", "48616c6c67656972"], 1, ["0xa113b22d40dc1d5d086003c27a556e597f614e8b"]
-// "4a616e6973", "0xd25ed029c093e56bc8911a07c46545000cbf37c6", 1234, "74657374"
-//
+    function getSalt() view public isCreator returns (string) {
+        return salt;
+    }
+}
