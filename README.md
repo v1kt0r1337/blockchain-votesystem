@@ -10,6 +10,11 @@ First navigate to project directory "contracts", then:
 solc Election.sol --combined-json abi,asm,ast,bin,bin-runtime,clone-bin,devdoc,interface,opcodes,srcmap,srcmap-runtime,userdoc > contracts.json
 ```
 
+To run docker image:
+```sh
+docker run -d --net host --name vote -e PORT=3000 -e ADDRESS=yourWalletAddress -e PASSWORD=yourpassword -p 3000:3000 archheretic/blockchain-votesystem
+```
+
 
 16:50:04 <+archheretic> Har et litt rart voting system
 Har 2 smart kontrakter: Election (Stemmeseddel) og Voter. Vanlige folk som oss skal kunne lage en Voter gjennom dette 

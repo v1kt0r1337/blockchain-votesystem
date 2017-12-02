@@ -7,12 +7,9 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const path = require("path");
 const rootPath = require("../../projectRootPath");
-
 // Our files
 const voter = require("./routes/voter");
 const election = require("./routes/election");
-
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,10 +45,3 @@ console.log("NODE_ENV: " + env);
 console.log("Server is running on port " + port);
 
 module.exports = app;
-
-// For testing
-// const { getVotersAddressesFromBlockchain } = require("./models/voter");
-// console.log(getVotersAddressesFromBlockchain());
-
-// const runSimulation = require("./korridorsim");
-// runSimulation();
