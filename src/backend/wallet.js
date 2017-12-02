@@ -4,9 +4,11 @@
 
 const Web3 = require("web3");
 const web3 = new Web3();
-// const config = require("config");
+const config = require("config");
 const address = "http://localhost:8545";
 web3.setProvider(new web3.providers.HttpProvider(address));
+const walletAddress = process.env.ADDRESS || config.address;
+const walletPassword = process.env.PASSWORD || config.password;
 
 /**
  * This function unlocks the ethereum coinbase account.
@@ -17,15 +19,13 @@ web3.setProvider(new web3.providers.HttpProvider(address));
 function openWallet(duration=120) {
     console.log("Unlocking coinbase account");
     try {
-        console.log(process.env.ADDRESS);
-        console.log(process.env.PASSWORD);
-        web3.personal.unlockAccount(process.env.ADDRESS, process.env.PASSWORD, duration);
+        web3.personal.unlockAccount(walletAddress, walletPassword, duration);
     } catch(e) {
         console.log(e);
     }
 }
 
-function getWalletsContractAddresses(startBlockNumber, endBlockNumber, walletAddress=process.env.ADDRESS) {
+function getWalletsContractAddresses(startBlockNumber, endBlockNumber) {
     const txHashes = getTxHashesFromWalletAddress(startBlockNumber, endBlockNumber, walletAddress);
     // There is a chance that there is no contracts on that transaction, so we need to filter away undefined.
     const contractAddresses = txHashes.map(txHash => getContractFromTxHash(txHash)).filter(e => e != undefined);
@@ -46,7 +46,7 @@ function getTxHashesFromWalletAddress(startBlockNumber, endBlockNumber, myAddres
         const block = web3.eth.getBlock(i, true);
         if (block != null && block.transactions != null) {
             block.transactions.forEach((tx) => {
-                if (process.env.ADDRESS == tx.from) {
+                if (walletAddress == tx.from) {
                     console.log("Found TXHash: " + tx.hash);
                     txHashes.push(tx.hash);
                 }

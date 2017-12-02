@@ -3,7 +3,6 @@
  */
 const Web3 = require("web3");
 const web3 = new Web3();
-const config = require("config");
 const { getContracts, contractDeploymentInfo } = require("./contract");
 const { openWallet } = require("../wallet");
 const { getVotersAddressesFromBlockchain } = require("./voter");

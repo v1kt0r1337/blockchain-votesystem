@@ -3,7 +3,6 @@
  */
 const Web3 = require("web3");
 const web3 = new Web3();
-const config = require("config");
 const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcrypt");
@@ -56,7 +55,7 @@ function vote(electionAddress, voterAddress, chosenCandidate, ssn, password, cal
 }
 
 /**
- * Returns all voters on the blockchain created from the wallet address in specified in the config files.
+ * Returns all voters on the blockchain created from the wallet address
  */
 function getVotersAddressesFromBlockchain(firstBlock, lastBlock) {
     const {VoterContract, code} = getVoterContract();
