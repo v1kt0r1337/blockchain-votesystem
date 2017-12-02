@@ -89,8 +89,9 @@ The smart contracts should already be compiled, but if you want to recompile the
 then you can you can use the solc solidity compiler: 
 http://solidity.readthedocs.io/en/develop/installing-solidity.html
  
-It's important that this is done in the exact same path as the contract code.
 First navigate to project directory "contracts", then:
 ```sh
 solc Election.sol --combined-json abi,asm,ast,bin,bin-runtime,clone-bin,devdoc,interface,opcodes,srcmap,srcmap-runtime,userdoc > contracts.json
 ```
+It's important that the compilation is done in the exact same path as the contract code,
+compiling using solc contracts/Elections.sol will cause unwanted results.
