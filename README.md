@@ -8,8 +8,8 @@ I'm also not responsible for any Ethereum you might lose when running or fiddlin
 - [About](#about)
 - [Docker Image](#docker-image)
 - [Prerequisites](#prerequisites)
-    - [Geth](#geth)
-    - [Node.js and npm](#Node.js-and-npm)
+    - [Geth](#geth-also-needed-for-docker-container)
+    - [Node.js and npm](#node.js-and-npm)
 - [Getting Started](#getting-started)
     - [Ethereum blockchain](#ethereum-blockchain)
     - [Blockchain-votesystem](#blockchain-votesystem)
@@ -91,7 +91,7 @@ To start the application:
 ```sh
 $ ADDRESS=yourWalletAddress PASSWORD=yourWalletPassword node src/backend/server.js
 ```
-Alternatively you can modify config/dev.json or config/prod.json and replace address and password there 
+Alternatively you can modify the files config/dev.json or config/prod.json and replace address and password there 
 and run one of the following command:
 ```sh
 $ npm run start:prod
