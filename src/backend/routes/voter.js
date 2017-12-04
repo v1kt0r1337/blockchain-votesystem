@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const VoterDeployer = require("../contractDeployment/voterDeployer");
 const { deployVoterContract, vote } = require("../models/voter");
 
 /**

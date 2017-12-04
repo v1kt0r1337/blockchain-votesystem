@@ -9,15 +9,16 @@ I'm also not responsible for any Ethereum you might lose when running or fiddlin
 - [Docker Image](#docker-image)
 - [Prerequisites](#prerequisites)
     - [Geth](#geth)
-    - [Node.js and npm](#Node.jsandnpm)
+    - [Node.js and npm](#Node.js-and-npm)
 - [Getting Started](#getting-started)
-    - [Ethereum blockchain](#ethereumblockchain)
+    - [Ethereum blockchain](#ethereum-blockchain)
     - [Blockchain-votesystem](#blockchain-votesystem)
-    - [Smart contracts](#smartcontracts)
+    - [Smart contracts](#smart-contracts)
 - [How to run](#how-to-run)
+- [Further development](further-development)
 
 ## About
-Checkout our [wiki!](https://github.com/Archheretic/blockchain-votesystem/wiki)
+Checkout our [wiki](https://github.com/Archheretic/blockchain-votesystem/wiki)!
 
 ## Docker Image
 
@@ -84,6 +85,21 @@ Then build the React project with:
 $ npm run build
 ```
 
+
+To start the application: 
+(remember to replace yourWalletAddress and yourWalletPassword with your actual wallet address and password)
+```sh
+$ ADDRESS=yourWalletAddress PASSWORD=yourWalletPassword node src/backend/server.js
+```
+Alternatively you can modify config/dev.json or config/prod.json and replace address and password there 
+and run one of the following command:
+```sh
+$ npm run start:prod
+```
+```sh
+$ npm run start:dev
+```
+
 ### Smart contracts
 The smart contracts should already be compiled, but if you want to recompile the contracts or make changes to them
 then you can you can use the solc solidity compiler: 
@@ -95,3 +111,16 @@ solc Election.sol --combined-json abi,asm,ast,bin,bin-runtime,clone-bin,devdoc,i
 ```
 It's important that the compilation is done in the exact same path as the contract code,
 compiling using solc contracts/Elections.sol will cause unwanted results.
+
+
+## Further development
+If you want to do further development on the project I recommend running the project with
+```sh
+$ npm start
+```
+and
+```sh
+$ npm run hotload
+```
+This way you got hotload on both frontend and backend. Backend running on port 3000 and the React app on port 3001.
+Also before doing further development be sure to read up about the fallacies of this project [wiki](https://github.com/Archheretic/blockchain-votesystem/wiki/The-system:-Weaknesses-and-potential-improvements)

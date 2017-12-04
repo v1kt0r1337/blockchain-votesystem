@@ -26,9 +26,7 @@ function deployVoterContract(ssn, password, callback) {
 function vote(electionAddress, voterAddress, chosenCandidate, ssn, password, callback) {
     const {VoterContract, code} = getVoterContract();
     const contract = VoterContract.at(voterAddress);
-    console.log("test");
     openWallet();
-//    console.log(contract.getSalt.call());
     contract.getSalt.call((err, salt) => {
         if (err) {
             callback(err);
@@ -46,12 +44,6 @@ function vote(electionAddress, voterAddress, chosenCandidate, ssn, password, cal
             });
         }
     });
-
-    // console.log(chosenCandidate);
-    // console.log(electionAddress);
-    // console.log(ssn);
-    // console.log(password);
-
 }
 
 /**
